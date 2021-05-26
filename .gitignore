@@ -1,3 +1,5 @@
+/**/*.d.ts
+assets
 node_modules/
 .expo/
 npm-debug.*
