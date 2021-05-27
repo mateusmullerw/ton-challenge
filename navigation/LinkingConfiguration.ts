@@ -12,19 +12,11 @@ export default {
         screens: {
             Root: {
                 screens: {
-                    TabOne: {
-                        screens: {
-                            TabOneScreen: 'one',
-                        },
-                    },
-                    TabTwo: {
-                        screens: {
-                            TabTwoScreen: 'two',
-                        },
-                    },
+                    ProductList: 'ProductList',
+                    ShoppingCart: 'ShoppingCart',
                 },
             },
-            NotFound: '*',
         },
+        NotFound: '*',
     },
 };
