@@ -6,6 +6,9 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingHorizontal: 10,
     },
+    list: {
+        flex: 1,
+    },
     title: {
         fontSize: 20,
     },

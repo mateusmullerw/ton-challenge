@@ -1,8 +1,8 @@
 import { createStackNavigator, StackScreenProps } from '@react-navigation/stack';
 import * as React from 'react';
 
-import { ProductList } from '../screens/ProductList';
-import TabTwoScreen from '../screens/TabTwoScreen';
+import ProductList from '../domains/Products/ProductList';
+import Cart from '../domains/Cart/Cart';
 import { IconButton } from '../components/IconButton';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
@@ -31,21 +31,21 @@ export const HeaderNavigator = ({
                         <IconButton
                             onPress={() => navigation.navigate('ShoppingCart')}
                             iconName="cart-outline"
-                            color={Colors[colorScheme].text}
+                            color={Colors[colorScheme].textHigh}
                         />
                     ),
                 }}
             />
             <Stack.Screen
                 name="ShoppingCart"
-                component={TabTwoScreen}
+                component={Cart}
                 options={{
                     headerTitle: 'Shopping Cart',
                     headerLeft: () => (
                         <IconButton
                             onPress={() => navigation.goBack()}
                             iconName="arrow-back"
-                            color={Colors[colorScheme].text}
+                            color={Colors[colorScheme].textHigh}
                         />
                     ),
                 }}

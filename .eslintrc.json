@@ -48,6 +48,7 @@
         "react/jsx-one-expression-per-line": "off",
         "react/jsx-filename-extension": "off",
         "react/sort-comp": "off",
+        "react/jsx-props-no-spreading": "off",
         "react/prop-types": 0,
         "import/no-named-as-default": 0,
         "import/extensions": [

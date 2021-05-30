@@ -8,7 +8,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
 
-import NotFoundScreen from '../screens/NotFoundScreen';
+import NotFoundScreen from '../domains/NotFoundScreen';
 import { RootStackParamList } from '../types';
 import { HeaderNavigator } from './HeaderNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
