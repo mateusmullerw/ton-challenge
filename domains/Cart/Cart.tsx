@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, ActivityIndicator } from 'react-native';
 import { compose } from 'redux';
-import { ProductItem } from '../../components/ProductItem';
+import { CartItem } from '../../components/CartItem';
 import { withProducts, WithProductsProps } from '../Products/Products.hocs';
 import { withCart, WithCartProps } from './Cart.hocs';
-import { View } from '../../components/Themed';
+import { View, Text } from '../../components/Themed';
 import { styles } from './Cart.styles';
 import useColorScheme from '../../hooks/useColorScheme';
 import Colors from '../../constants/Colors';
-import { DetailsInterface } from '../Products/Products.types';
+import { ProductItemInterface } from '../Products/Products.types';
 
 interface ProductListProps extends WithProductsProps, WithCartProps{}
 
@@ -17,28 +17,39 @@ const ITEMS_PER_PAGE = 10;
 const Cart = ({
     productsDetails,
     cartItems,
+    addToCart,
+    removeFromCart,
 }:ProductListProps) => {
     const colorScheme = useColorScheme();
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [items, setItems] = useState<DetailsInterface[]>([]);
-
+    const [items, setItems] = useState<ProductItemInterface[]>([]);
+    const numberOfItems = cartItems.length;
     useEffect(() => {
         setIsLoading(false);
-        const cartItemsDetails = cartItems.map((item) => productsDetails[item.id]);
+        const cartItemsDetails = cartItems.map((item) => (
+            {
+                data: productsDetails[item.id].data,
+                addToCart,
+                removeFromCart,
+                key: productsDetails[item.id].key,
+                isAddedToCart: productsDetails[item.id].isAddedToCart,
+            }
+        ));
+
         setItems(cartItemsDetails);
     }, [cartItems]);
 
     return (
         <View style={styles.container}>
+            <Text>{`${numberOfItems} products in your cart:`}</Text>
             {isLoading
                 ? <ActivityIndicator size="large" color={Colors[colorScheme].text} />
                 : (
                     <FlatList
                         style={styles.list}
                         data={items}
-                        renderItem={ProductItem}
-                        keyExtractor={(item) => item.metadataDate}
-                        numColumns={2}
+                        renderItem={CartItem}
+                        keyExtractor={(item) => item.key}
                         initialNumToRender={ITEMS_PER_PAGE}
                     />
                 )}

@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import {
     getProductList,
     getProductsDetails,
+    getProductUpdated,
     getProductListLoadState,
     getProductLoadState,
     fetchSearch,
@@ -14,9 +15,10 @@ import {
 
 export interface WithProductsProps{
     productList: ProductListInterface;
-    productListLoadState: string
-    productsDetails: ProductsDetailsInterface
-    productsDetailsLoadState: string
+    productListLoadState: string;
+    productsDetails: ProductsDetailsInterface;
+    productsDetailsLoadState: string;
+    detailsUpdated: string;
     fetchProductList: Function;
     fetchProductDetails: Function;
 }
@@ -27,6 +29,7 @@ export const withProducts = connect(
         productListLoadState: getProductListLoadState(state),
         productsDetails: getProductsDetails(state),
         productsDetailsLoadState: getProductLoadState(state),
+        detailsUpdated: getProductUpdated(state),
     }),
     (dispatch) => bindActionCreators({
         fetchProductList: fetchSearch,

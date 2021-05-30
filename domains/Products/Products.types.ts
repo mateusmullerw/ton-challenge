@@ -3,9 +3,13 @@ import { WithDataFetchParams } from '../../redux/types';
 export interface State {
     products: DataInterface
 }
+
+export interface ProductDetailsState extends WithDataFetchParams<ProductsDetailsInterface> {
+    lastUpdate: string,
+}
 export interface DataInterface {
     productList: WithDataFetchParams<ProductListInterface>;
-    productsDetails: WithDataFetchParams<ProductsDetailsInterface>;
+    productsDetails: ProductDetailsState;
 }
 
 export interface ProductListInterface {
@@ -14,14 +18,25 @@ export interface ProductListInterface {
 }
 
 export interface ProductsDetailsInterface {
-    [key: number]: DetailsInterface
+    [key: number]: ProductDetailsInterface
 }
 
-export interface DetailsInterface {
+export interface ProductDetailsInterface {
+        data: Partial<ProductData>
+        key: string
+        isAddedToCart: boolean,
+    }
+
+export interface ProductItemInterface extends ProductDetailsInterface {
+        addToCart: Function;
+        removeFromCart: Function;
+    }
+
+export interface ProductData {
     'objectID': number,
     'isHighlight': boolean,
-    'accessionNumber': string,
     'accessionYear': string,
+    'accessionNumber': string,
     'isPublicDomain': true,
     'primaryImage': string,
     'primaryImageSmall': string,
@@ -37,7 +52,7 @@ export interface DetailsInterface {
     'portfolio': string,
     'artistRole': string,
     'artistPrefix': string,
-    'artistDisplayName': string, //
+    'artistDisplayName': string,
     'artistDisplayBio': string,
     'artistSuffix': string,
     'artistAlphaSort': string,
@@ -47,10 +62,10 @@ export interface DetailsInterface {
     'artistGender': string,
     'artistWikidata_URL': string,
     'artistULAN_URL': string,
-    'objectDate': string, //
+    'objectDate': string,
     'objectBeginDate': number,
     'objectEndDate': number,
-    'medium': string, //
+    'medium': string,
     'dimensions': string,
     'measurements': MeasurementsInterface[]
     'creditLine': string,
@@ -65,7 +80,7 @@ export interface DetailsInterface {
     'locus': string,
     'excavation': string,
     'river': string,
-    'classification': string, //
+    'classification': string,
     'rightsAndReproduction': string,
     'linkResource': string,
     'metadataDate': string,

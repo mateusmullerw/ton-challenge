@@ -24,28 +24,28 @@ export const HeaderNavigator = ({
         >
             <Stack.Screen
                 name="ProductList"
-                component={ProductList}
+                component={ProductList as React.FunctionComponent}
                 options={{
                     headerTitle: 'Products',
                     headerRight: () => (
                         <IconButton
                             onPress={() => navigation.navigate('ShoppingCart')}
                             iconName="cart-outline"
-                            color={Colors[colorScheme].textHigh}
+                            colorName="textHigh"
                         />
                     ),
                 }}
             />
             <Stack.Screen
                 name="ShoppingCart"
-                component={Cart}
+                component={Cart as React.FunctionComponent}
                 options={{
                     headerTitle: 'Shopping Cart',
                     headerLeft: () => (
                         <IconButton
                             onPress={() => navigation.goBack()}
                             iconName="arrow-back"
-                            color={Colors[colorScheme].textHigh}
+                            colorName="textHigh"
                         />
                     ),
                 }}

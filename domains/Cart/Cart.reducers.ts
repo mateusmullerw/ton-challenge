@@ -1,4 +1,5 @@
 import { ActionType } from '../../redux/types';
+import { CartItemType } from './Cart.types';
 
 export const ADD_ITEM_TO_CART = 'ADD_ITEM_TO_CART';
 export const REMOVE_ITEM_FROM_CART = 'REMOVE_ITEM_FROM_CART';
@@ -20,7 +21,7 @@ export const cartReducer = (state = cartInitialState, action: ActionType) => {
     case REMOVE_ITEM_FROM_CART:
         return {
             ...state,
-            items: state.items.filter((item) => item !== action.payload),
+            items: state.items.filter((item: CartItemType) => item.id !== action.payload),
         };
     case OPEN_CART_NOTIFICATION:
         return { ...state, isNotificationOpen: true };

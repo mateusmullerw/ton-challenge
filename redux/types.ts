@@ -4,7 +4,7 @@ export interface WithDataFetchParams<T> {
     error: Error;
 }
 
-export interface ActionType<> {
+export interface ActionType {
     type: string,
-    payload?: object
+    payload?: {}
 }
