@@ -9,11 +9,11 @@ import { styles } from './ProducList.styles';
 import { LOAD_STATE } from '../../redux/constants';
 import useColorScheme from '../../hooks/useColorScheme';
 import Colors from '../../constants/Colors';
-import { ProductItemInterface } from './Products.types';
+import { ProductItemInterface, ProductDetailsInterface } from './Products.types';
 
 interface ProductListProps extends WithProductsProps, WithCartProps{}
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 6;
 
 const ProductList = ({
     productListLoadState,
@@ -23,6 +23,7 @@ const ProductList = ({
     fetchProductDetails,
     addToCart,
     removeFromCart,
+    detailsUpdated,
 }:ProductListProps) => {
     const colorScheme = useColorScheme();
     const [currentPage, setCurrentPage] = useState<number>(0);
@@ -51,8 +52,19 @@ const ProductList = ({
     }, []);
 
     useEffect(() => {
-        console.log(Object.values(productsDetails));
-        setPageItems(Object.values(productsDetails).map((item) => (
+        if (productListLoadState === LOAD_STATE.SUCCESS) {
+            loadNextPage();
+            setIsLoading(false);
+        }
+    }, [productListLoadState]);
+
+    useEffect(() => {
+        const loadedDetails: ProductDetailsInterface[] = [];
+        productsDetails.forEach((product) => {
+            loadedDetails.push(product);
+        });
+
+        setPageItems(loadedDetails.map((item) => (
             {
                 data: item.data,
                 addToCart,
@@ -61,14 +73,7 @@ const ProductList = ({
                 isAddedToCart: item.isAddedToCart,
             }
         )));
-    }, [productsDetails]);
-
-    useEffect(() => {
-        if (productListLoadState === LOAD_STATE.SUCCESS) {
-            loadNextPage();
-            setIsLoading(false);
-        }
-    }, [productListLoadState]);
+    }, [productsDetails, detailsUpdated]);
 
     return (
         <View style={styles.container}>
@@ -80,11 +85,10 @@ const ProductList = ({
                         data={[...pageItems]}
                         renderItem={ProductItem}
                         keyExtractor={(item) => item.key}
-                        // extraData={Object.assign('', detailsUpdated)}
                         numColumns={2}
                         initialNumToRender={ITEMS_PER_PAGE}
-                        // onEndReached={loadNextPage}
-                        // onEndReachedThreshold={1}
+                        onEndReached={loadNextPage}
+                        onEndReachedThreshold={0.1}
                     />
                 )}
         </View>

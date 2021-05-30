@@ -6,7 +6,7 @@
 import * as React from 'react';
 import { Text as DefaultText, View as DefaultView, Button as DefaultButton } from 'react-native';
 
-import Colors from '../constants/Colors';
+import Colors, { ColorsTypes } from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 
 export function useThemeColor(
@@ -29,6 +29,7 @@ type ThemeProps = {
 
 export type TextProps = ThemeProps & DefaultText['props'];
 export type ViewProps = ThemeProps & DefaultView['props'];
+export type ButtonProps = DefaultButton['props'] & {backgroundColorName?: ColorsTypes};
 
 export const Text = (props: TextProps) => {
     const {
@@ -48,9 +49,12 @@ export const View = (props: ViewProps) => {
     return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
 };
 
-export const Button = (props : DefaultButton['props']) => {
+export const Button = ({ backgroundColorName, ...otherProps } : ButtonProps) => {
+    const buttonColorName = backgroundColorName || 'buttonColor';
     const theme = useColorScheme();
-    const themeColor = Colors[theme].buttonColor;
+    const themeColor = Colors[theme][buttonColorName];
 
-    return <DefaultButton color={themeColor} {...props} />;
+    return (
+        <DefaultButton color={themeColor} {...otherProps} />
+    );
 };

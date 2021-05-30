@@ -10,7 +10,7 @@ import { ColorSchemeName } from 'react-native';
 
 import NotFoundScreen from '../domains/NotFoundScreen';
 import { RootStackParamList } from '../types';
-import { HeaderNavigator } from './HeaderNavigator';
+import HeaderNavigator from './HeaderNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {

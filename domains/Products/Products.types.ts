@@ -4,7 +4,7 @@ export interface State {
     products: DataInterface
 }
 
-export interface ProductDetailsState extends WithDataFetchParams<ProductsDetailsInterface> {
+export interface ProductDetailsState extends WithDataFetchParams<ProductsDetailsType> {
     lastUpdate: string,
 }
 export interface DataInterface {
@@ -17,10 +17,12 @@ export interface ProductListInterface {
     objectIDs: number[],
 }
 
-export interface ProductsDetailsInterface {
-    [key: number]: ProductDetailsInterface
-}
+export type ProductsDetailsType = Map<number, ProductDetailsInterface>
 
+export type ProductsDetailsItemType = {
+    key: number,
+    value: ProductDetailsInterface,
+}
 export interface ProductDetailsInterface {
         data: Partial<ProductData>
         key: string

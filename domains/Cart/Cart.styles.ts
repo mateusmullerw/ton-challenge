@@ -4,12 +4,16 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        paddingHorizontal: 10,
     },
     list: {
         flex: 1,
     },
-    title: {
+    header: {
+        paddingVertical: 20,
+        paddingHorizontal: 15,
+    },
+    text: {
         fontSize: 20,
+        fontWeight: '600',
     },
 });

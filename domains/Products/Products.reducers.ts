@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { LOAD_STATE } from '../../redux/constants';
 import { ActionType } from '../../redux/types';
+import { ProductsDetailsItemType } from './Products.types';
 
 export const UPDATE_PRODUCT_DETAILS = 'UPDATE_PRODUCT_DETAILS';
 export const PRODUCT_UPDATED = 'PRODUCT_UPDATED';
@@ -18,7 +19,7 @@ const productListInitialState = {
 };
 const productDetailsInitialState = {
     loadState: LOAD_STATE.LOADING,
-    data: {},
+    data: new Map(),
     error: null,
     lastUpdate: '',
 };
@@ -36,12 +37,19 @@ const productListsReducer = (state = productListInitialState, action: ActionType
     }
 };
 
-const productDetailsReducer = (state = productDetailsInitialState, action: ActionType) => {
+interface ProductDetailsAction extends ActionType{
+    payload: ProductsDetailsItemType
+}
+
+const productDetailsReducer = (
+    state = productDetailsInitialState, action: ProductDetailsAction,
+) => {
     switch (action.type) {
     case UPDATE_PRODUCT_DETAILS:
         return {
             ...state,
-            data: { ...state.data, ...action.payload },
+            loadState: LOAD_STATE.SUCCESS,
+            data: state.data.set(action.payload.key, action.payload.value),
         };
     case PRODUCT_UPDATED:
         return {
@@ -54,7 +62,7 @@ const productDetailsReducer = (state = productDetailsInitialState, action: Actio
         return {
             ...state,
             loadState: LOAD_STATE.SUCCESS,
-            data: { ...state.data, ...action.payload },
+            data: state.data.set(action.payload.key, action.payload.value),
         };
     case FETCH_PRODUCT_REQUEST_FAILED:
         return { ...state, loadState: LOAD_STATE.FAIL, error: action.payload };

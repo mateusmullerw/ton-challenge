@@ -1,7 +1,11 @@
 import { Dispatch } from 'redux';
 import { ActionType } from '../../redux/types';
 import {
-    State, ProductListInterface, ProductsDetailsInterface, ProductData, ProductItemInterface,
+    State,
+    ProductListInterface,
+    ProductData,
+    ProductDetailsInterface,
+    ProductsDetailsItemType,
 } from './Products.types';
 import { makeResquest } from '../../network/fetch';
 import {
@@ -39,33 +43,38 @@ export const fetchProduct = (id: number) => (
     dispatch(fetchProductCalled());
     const state = getState();
     const products = getProductsDetails(state);
-    const productNotInState = !Object.prototype.hasOwnProperty.call(products, id);
+    const productNotInState = !products.has(id);
 
     if (productNotInState) {
         const completeURL = productDetailURL + id;
         makeResquest(completeURL)
             .then((data: ProductData) => {
                 const product = {
-                    [id]: { data, key: data.accessionNumber, isAddedToCart: false },
+                    key: id, value: { data, key: data.accessionNumber, isAddedToCart: false },
                 };
-                return dispatch(fetchProductSucceeded(product));
+                dispatch(fetchProductSucceeded(product));
+
+                const timestamp = new Date().getTime().toString();
+                dispatch(productUpdated(timestamp));
             })
             .catch((error) => dispatch(fetchProductFailed(error)));
     }
 };
 
-export const updateProductDetails = (id: number, fieldsToUpdate:Partial<ProductItemInterface>) => (
+export const updateProductDetails = (
+    id: number, fieldsToUpdate:Partial<ProductDetailsInterface>,
+) => (
     dispatch: Dispatch<ActionType>,
     getState: Function,
 ) => {
     const state = getState();
-    const oldProduct = getProductsDetails(state)[id];
+    const oldProduct = getProductsDetails(state).get(id);
     const updatedProduct = { ...oldProduct, ...fieldsToUpdate };
-    const product = { [id]: updatedProduct };
+    const product = { key: id, value: updatedProduct };
 
     dispatch(updateProduct(product));
 
-    const timestamp = (new Date()).toString();
+    const timestamp = new Date().getTime().toString();
     dispatch(productUpdated(timestamp));
 };
 
@@ -81,7 +90,7 @@ export const fetchSearchFailed = (error: {}) => ({
     payload: error,
 });
 
-export const updateProduct = (product: ProductsDetailsInterface) => ({
+export const updateProduct = (product:{key: number, value:Partial<ProductDetailsInterface>}) => ({
     type: UPDATE_PRODUCT_DETAILS,
     payload: product,
 });
@@ -92,7 +101,7 @@ export const productUpdated = (timestamp: string) => ({
 export const fetchProductCalled = () => ({
     type: FETCH_PRODUCT_REQUEST_CALLED,
 });
-export const fetchProductSucceeded = (response: ProductsDetailsInterface) => ({
+export const fetchProductSucceeded = (response: ProductsDetailsItemType) => ({
     type: FETCH_PRODUCT_REQUEST_SUCCEEDED,
     payload: response,
 });

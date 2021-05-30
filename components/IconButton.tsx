@@ -6,12 +6,14 @@ import { styles } from './IconButton.styles';
 import Colors, { ColorsTypes } from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 
-interface IconButonProps {
+type IconName = keyof typeof Ionicons.glyphMap;
+type ColorName= ColorsTypes
+export interface IconButtonProps {
     onPress: PressEvent
-    iconName: keyof typeof Ionicons.glyphMap
-    colorName: ColorsTypes
+    iconName: IconName
+    colorName: ColorName
 }
-export const IconButton = ({ onPress, iconName, colorName }: IconButonProps) => {
+export const IconButton = ({ onPress, iconName, colorName }: IconButtonProps) => {
     const colorScheme = useColorScheme();
     const iconColor = Colors[colorScheme][colorName];
 

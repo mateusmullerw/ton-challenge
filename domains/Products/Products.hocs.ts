@@ -10,13 +10,13 @@ import {
     fetchProduct,
 } from './Products.state';
 import {
-    State, ProductListInterface, ProductsDetailsInterface,
+    State, ProductListInterface, ProductsDetailsType,
 } from './Products.types';
 
 export interface WithProductsProps{
     productList: ProductListInterface;
     productListLoadState: string;
-    productsDetails: ProductsDetailsInterface;
+    productsDetails: ProductsDetailsType;
     productsDetailsLoadState: string;
     detailsUpdated: string;
     fetchProductList: Function;

@@ -45,6 +45,7 @@ export const ProductItem = ({
                             onPress={() => handleRemoveFromCart()}
                             title="Remove from cart"
                             accessibilityLabel={`Add ${item.data.title} to cart`}
+                            backgroundColorName="delete"
                         />
                     )
                     : (

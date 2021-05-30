@@ -1,18 +1,24 @@
 import { createStackNavigator, StackScreenProps } from '@react-navigation/stack';
 import * as React from 'react';
+import { compose } from 'redux';
+import { withCart, WithCartProps } from '../domains/Cart/Cart.hocs';
 
 import ProductList from '../domains/Products/ProductList';
 import Cart from '../domains/Cart/Cart';
 import { IconButton } from '../components/IconButton';
+import { IconButtonNotification } from '../components/IconButtonNotification';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
 import { ScreensStackParamList } from '../types';
 
 const Stack = createStackNavigator();
 
-export const HeaderNavigator = ({
+interface HeaderNavigatorInterface extends WithCartProps, StackScreenProps<ScreensStackParamList, 'ProductList'>{}
+
+const HeaderNavigator = ({
     navigation,
-}: StackScreenProps<ScreensStackParamList, 'ProductList'>) => {
+    cartItems,
+}: HeaderNavigatorInterface) => {
     const colorScheme = useColorScheme();
 
     return (
@@ -28,10 +34,13 @@ export const HeaderNavigator = ({
                 options={{
                     headerTitle: 'Products',
                     headerRight: () => (
-                        <IconButton
+                        <IconButtonNotification
                             onPress={() => navigation.navigate('ShoppingCart')}
                             iconName="cart-outline"
                             colorName="textHigh"
+                            notificationNumber={cartItems.length}
+                            notificationColorName="notification"
+                            notificationTextColorName="textHigh"
                         />
                     ),
                 }}
@@ -53,3 +62,9 @@ export const HeaderNavigator = ({
         </Stack.Navigator>
     );
 };
+
+const enhancer = compose(
+    withCart,
+);
+
+export default enhancer(HeaderNavigator);

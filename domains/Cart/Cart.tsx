@@ -24,24 +24,32 @@ const Cart = ({
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [items, setItems] = useState<ProductItemInterface[]>([]);
     const numberOfItems = cartItems.length;
+
     useEffect(() => {
         setIsLoading(false);
-        const cartItemsDetails = cartItems.map((item) => (
-            {
-                data: productsDetails[item.id].data,
-                addToCart,
-                removeFromCart,
-                key: productsDetails[item.id].key,
-                isAddedToCart: productsDetails[item.id].isAddedToCart,
-            }
-        ));
 
-        setItems(cartItemsDetails);
+        const cartIds = cartItems.map((item) => item.id);
+        const loadedDetails: ProductItemInterface[] = [];
+        productsDetails.forEach((value, key) => {
+            if (cartIds.includes(key)) {
+                loadedDetails.push({
+                    data: value.data,
+                    removeFromCart,
+                    addToCart,
+                    key: value.key,
+                    isAddedToCart: value.isAddedToCart,
+                });
+            }
+        });
+
+        setItems(loadedDetails);
     }, [cartItems]);
 
     return (
         <View style={styles.container}>
-            <Text>{`${numberOfItems} products in your cart:`}</Text>
+            <View style={styles.header}>
+                <Text style={styles.text}>{`${numberOfItems} products in your cart`}</Text>
+            </View>
             {isLoading
                 ? <ActivityIndicator size="large" color={Colors[colorScheme].text} />
                 : (
