@@ -28,7 +28,7 @@ export const getProductUpdated = (state: State) => state.products.productsDetail
 const searchURL = 'https://collectionapi.metmuseum.org/public/collection/v1/search?q=illustration&hasImages=1';
 const productDetailURL = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
 
-export const fetchSearch = () => (dispatch: Dispatch<ActionType>) => {
+export const fetchSearch = () => async (dispatch: Dispatch<ActionType>) => {
     dispatch(fetchSearchCalled());
 
     makeResquest(searchURL)
@@ -52,10 +52,11 @@ export const fetchProduct = (id: number) => (
                 const product = {
                     key: id, value: { data, key: data.accessionNumber, isAddedToCart: false },
                 };
-                dispatch(fetchProductSucceeded(product));
 
-                const timestamp = new Date().getTime().toString();
-                dispatch(productUpdated(timestamp));
+                return [
+                    dispatch(fetchProductSucceeded(product)),
+                    dispatch(productUpdated()),
+                ];
             })
             .catch((error) => dispatch(fetchProductFailed(error)));
     }
@@ -74,8 +75,7 @@ export const updateProductDetails = (
 
     dispatch(updateProduct(product));
 
-    const timestamp = new Date().getTime().toString();
-    dispatch(productUpdated(timestamp));
+    dispatch(productUpdated());
 };
 
 export const fetchSearchCalled = () => ({
@@ -94,9 +94,9 @@ export const updateProduct = (product:{key: number, value:Partial<ProductDetails
     type: UPDATE_PRODUCT_DETAILS,
     payload: product,
 });
-export const productUpdated = (timestamp: string) => ({
+export const productUpdated = () => ({
     type: PRODUCT_UPDATED,
-    payload: timestamp,
+    payload: new Date().getTime().toString(),
 });
 export const fetchProductCalled = () => ({
     type: FETCH_PRODUCT_REQUEST_CALLED,

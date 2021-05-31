@@ -9,25 +9,30 @@ interface ProductItemProps {
     item: ProductItemInterface
 }
 
+export const texts = {
+    add: 'Add to cart',
+    remove: 'Remove from cart',
+};
+
 export const ProductItem = ({
     item,
 }: ProductItemProps) => {
-    const handleAddToCart = () => {
-        const itemToAdd = {
-            id: item.data.objectID,
-            quantity: 1,
-        };
-        item.addToCart(itemToAdd);
-    };
-    const handleRemoveFromCart = () => {
-        const itemToRemove = {
-            id: item.data.objectID,
-            quantity: 1,
-        };
-        item.removeFromCart(itemToRemove);
-    };
+    const isAdd = !item.isAddedToCart;
 
     const title = ensureTextMaxLength(item.data.title, 30);
+    const buttonText = isAdd ? texts.add : texts.remove;
+    const backgroundColorName = isAdd ? undefined : 'delete';
+
+    const handleOnPress = () => {
+        const itemToUpdate = {
+            id: item.data.objectID,
+            quantity: 1,
+        };
+
+        return isAdd
+            ? item.addToCart(itemToUpdate)
+            : item.removeFromCart(itemToUpdate);
+    };
 
     return (
         <View style={styles.container}>
@@ -39,22 +44,11 @@ export const ProductItem = ({
                 <Text style={styles.text}>{title}</Text>
             </View>
             <View style={styles.buttonContainer}>
-                {item.isAddedToCart
-                    ? (
-                        <Button
-                            onPress={() => handleRemoveFromCart()}
-                            title="Remove from cart"
-                            accessibilityLabel={`Add ${item.data.title} to cart`}
-                            backgroundColorName="delete"
-                        />
-                    )
-                    : (
-                        <Button
-                            onPress={() => handleAddToCart()}
-                            title="Add to cart"
-                            accessibilityLabel={`Add ${item.data.title} to cart`}
-                        />
-                    )}
+                <Button
+                    onPress={handleOnPress}
+                    title={buttonText}
+                    backgroundColorName={backgroundColorName}
+                />
             </View>
         </View>
     );

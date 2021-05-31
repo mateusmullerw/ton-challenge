@@ -18,10 +18,6 @@ export const addToCart = (item: CartItemType) => (
     dispatch(addItemToCart(item));
 
     dispatch(updateProductDetails(item.id, { isAddedToCart: true }));
-
-    dispatch(openCartNotification());
-
-    setTimeout(() => { dispatch(closeCartNotification()); }, 5000);
 };
 
 export const removeFromCart = (item: CartItemType) => (

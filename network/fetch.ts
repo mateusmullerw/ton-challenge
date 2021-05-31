@@ -5,9 +5,8 @@ const handleRequestError = (response: Response) => {
     return response;
 };
 
-export const makeResquest = async (url: string) => (
+export const makeResquest = (url: string) => (
     fetch(url, { method: 'GET' })
         .then(handleRequestError)
         .then((data) => data.json())
-        .catch((error: object) => error)
 );
