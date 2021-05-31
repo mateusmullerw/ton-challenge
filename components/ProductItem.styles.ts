@@ -2,18 +2,16 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
     container: {
+        borderRadius: 5,
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
         padding: 10,
+        margin: 10,
         overflow: 'hidden',
-        // backgroundColor: '#999',
     },
     image: {
-        // flex: 1,
         height: 200,
-        borderWidth: 3,
-        // borderColor: '#333888',
         width: '100%',
         resizeMode: 'contain',
     },
@@ -22,8 +20,6 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 10,
         height: 70,
-        // backgroundColor: '#573279',
-        // alignItems: 'flex-start',
     },
     text: {
         fontSize: 18,
@@ -32,8 +28,6 @@ export const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'flex-start',
         paddingTop: 15,
-        paddingBottom: 15,
-        color: '#573279',
-        // alignItems: 'flex-start',
+        paddingBottom: 0,
     },
 });

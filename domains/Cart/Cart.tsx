@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, ActivityIndicator } from 'react-native';
+import { FlatList } from 'react-native';
 import { compose } from 'redux';
 import { CartItem } from '../../components/CartItem';
 import { withProducts, WithProductsProps } from '../Products/Products.hocs';
@@ -7,8 +7,8 @@ import { withCart, WithCartProps } from './Cart.hocs';
 import { View, Text } from '../../components/Themed';
 import { styles } from './Cart.styles';
 import useColorScheme from '../../hooks/useColorScheme';
-import Colors from '../../constants/Colors';
 import { ProductItemInterface } from '../Products/Products.types';
+import { Loading } from '../../components/Loading';
 
 interface ProductListProps extends WithProductsProps, WithCartProps{}
 
@@ -33,6 +33,7 @@ const Cart = ({
         productsDetails.forEach((value, key) => {
             if (cartIds.includes(key)) {
                 loadedDetails.push({
+                    colorScheme,
                     data: value.data,
                     removeFromCart,
                     addToCart,
@@ -48,10 +49,13 @@ const Cart = ({
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.text}>{`${numberOfItems} products in your cart`}</Text>
+                <Text style={styles.text}>
+                    <Text style={styles.textNumber}>{numberOfItems}</Text>
+                    {' products in your cart'}
+                </Text>
             </View>
             {isLoading
-                ? <ActivityIndicator size="large" color={Colors[colorScheme].text} />
+                ? <Loading />
                 : (
                     <FlatList
                         style={styles.list}

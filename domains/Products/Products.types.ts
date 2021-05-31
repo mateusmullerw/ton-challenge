@@ -27,6 +27,7 @@ export interface ProductDetailsInterface {
         data: Partial<ProductData>
         key: string
         isAddedToCart: boolean,
+        colorScheme: 'light' | 'dark',
     }
 
 export interface ProductItemInterface extends ProductDetailsInterface {

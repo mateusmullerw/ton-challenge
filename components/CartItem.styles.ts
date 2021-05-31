@@ -3,17 +3,16 @@ import Layout from '../constants/Layout';
 
 export const styles = StyleSheet.create({
     container: {
-        // flex: 1,
+        borderRadius: 5,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 10,
+        padding: 5,
+        margin: 5,
         overflow: 'hidden',
         maxWidth: Layout.window.width,
-        // backgroundColor: '#999',
     },
     image: {
-        // flex: 1,
         height: 70,
         width: 70,
         resizeMode: 'contain',

@@ -14,6 +14,10 @@ export const styles = StyleSheet.create({
     },
     text: {
         fontSize: 20,
-        fontWeight: '600',
+        fontWeight: '400',
+    },
+    textNumber: {
+        fontSize: 20,
+        fontWeight: '700',
     },
 });

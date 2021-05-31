@@ -1,49 +1,56 @@
-const tintColorLight = '#2f95dc';
+const tintColorLight = '#1F1D2B';
 const tintColorDark = '#fff';
-const textColorLight = '0, 0, 0';
+const textColorLight = '31, 29, 43';
 const textColorDark = '256, 256, 256';
 
 export type ColorsTypes = keyof ColorsInterface
 
 export interface ColorsInterface{
-    text: string;
+    black: string;
+    white: string;
     textHigh: string;
     textMedium: string;
     textLow: string;
     background: string;
     tint: string;
     buttonColor:string;
-    buttonText: string;
+    add: string;
     delete: string;
     notification: string;
-    black: string;
+    header: string;
 }
 
 export default {
     light: {
-        text: '#000',
-        textHigh: `rgba(${textColorLight}, 0.87)`,
-        textMedium: `rgba(${textColorLight}, 0.87)`,
-        textLow: `rgba(${textColorLight}, 0.87)`,
-        background: '#fff',
-        tint: tintColorLight,
-        buttonColor: '#0A1E42',
-        buttonText: '#000',
-        delete: '#DF5454',
-        notification: '#DF5454',
         black: '#000',
+        white: '#fff',
+        textHigh: `rgba(${textColorLight}, 0.87)`,
+        textMedium: `rgba(${textColorLight}, 0.60)`,
+        textLow: `rgba(${textColorLight}, 0.40)`,
+        background: '#F3F3F8',
+        tint: tintColorLight,
+        buttonColor: '#525298',
+        add: '#22B07D',
+        delete: '#DF5454',
+        notification: '#FE3A3C',
+        header: '#fff',
+        card: '#fff',
+
     },
     dark: {
-        text: '#000',
-        textHigh: `rgba(${textColorDark}, 0.87)`,
-        textMedium: `rgba(${textColorDark}, 0.87)`,
-        textLow: `rgba(${textColorDark}, 0.87)`,
-        background: '#1D2025',
-        tint: tintColorDark,
-        buttonColor: '#00A399',
-        buttonText: '#000',
-        delete: '#D05454',
-        notification: '#DF5454',
         black: '#000',
+        white: '#fff',
+        textHigh: `rgba(${textColorDark}, 0.87)`,
+        textMedium: `rgba(${textColorDark}, 0.60)`,
+        textLow: `rgba(${textColorDark}, 0.40)`,
+        background: '#1F1D2B',
+        tint: tintColorDark,
+        buttonColor: '#525298',
+        add: '#22B07D',
+        delete: '#D14043',
+        notification: '#D14043',
+        header: '#252836',
+        card: '#252836',
+
     },
 };

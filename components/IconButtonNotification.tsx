@@ -18,7 +18,7 @@ export const IconButtonNotification = ({
     colorName,
     notificationNumber = 0,
     notificationColorName = 'notification',
-    notificationTextColorName = 'black',
+    notificationTextColorName = 'white',
 }: IconButonNotificationProps) => {
     const colorScheme = useColorScheme();
     const backgroundColor = Colors[colorScheme][notificationColorName];

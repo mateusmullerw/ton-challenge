@@ -26,6 +26,10 @@ const HeaderNavigator = ({
             screenOptions={{
                 headerTintColor: Colors[colorScheme].tint,
                 headerTitle: 'Ton Challenge',
+                headerStyle: {
+                    backgroundColor: Colors[colorScheme].header,
+                    paddingRight: 15,
+                },
             }}
         >
             <Stack.Screen
@@ -37,10 +41,10 @@ const HeaderNavigator = ({
                         <IconButtonNotification
                             onPress={() => navigation.navigate('ShoppingCart')}
                             iconName="cart-outline"
-                            colorName="textHigh"
+                            colorName="tint"
                             notificationNumber={cartItems.length}
                             notificationColorName="notification"
-                            notificationTextColorName="textHigh"
+                            notificationTextColorName="white"
                         />
                     ),
                 }}
@@ -54,7 +58,7 @@ const HeaderNavigator = ({
                         <IconButton
                             onPress={() => navigation.goBack()}
                             iconName="arrow-back"
-                            colorName="textHigh"
+                            colorName="tint"
                         />
                     ),
                 }}

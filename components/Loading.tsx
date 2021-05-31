@@ -11,7 +11,7 @@ export const Loading = () => {
     const colorScheme = useColorScheme();
     return (
         <View style={styles.container}>
-            <ActivityIndicator size="large" color={Colors[colorScheme].textHigh} />
+            <ActivityIndicator size="large" color={Colors[colorScheme].textMedium} />
         </View>
     );
 };

@@ -10,6 +10,7 @@ import { EndOfListLoading } from '../../components/EndOfListLoading';
 import { styles } from './ProducList.styles';
 import { LOAD_STATE } from '../../redux/constants';
 import { ProductItemInterface, ProductDetailsInterface } from './Products.types';
+import useColorScheme from '../../hooks/useColorScheme';
 
 interface ProductListProps extends WithProductsProps, WithCartProps{}
 
@@ -25,6 +26,7 @@ const ProductList = ({
     removeFromCart,
     detailsUpdated,
 }:ProductListProps) => {
+    const colorScheme = useColorScheme();
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [pageItems, setPageItems] = useState<ProductItemInterface[]>([]);
@@ -70,6 +72,7 @@ const ProductList = ({
                 removeFromCart,
                 key: item.key,
                 isAddedToCart: item.isAddedToCart,
+                colorScheme,
             }
         )));
     }, [productsDetails, detailsUpdated]);
