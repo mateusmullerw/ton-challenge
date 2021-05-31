@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
         height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
+
     },
     textContainer: {
         position: 'absolute',
@@ -23,10 +24,5 @@ export const styles = StyleSheet.create({
     text: {
         fontSize: 10,
         fontWeight: '700',
-    },
-    IconButtonContainer: {
-        flex: 1,
-        width: '100%',
-        height: '100%',
     },
 });

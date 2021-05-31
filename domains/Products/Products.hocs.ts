@@ -8,6 +8,8 @@ import {
     getProductLoadState,
     fetchSearch,
     fetchProduct,
+    getSearchTerm,
+    clearProductDetails,
 } from './Products.state';
 import {
     State, ProductListInterface, ProductsDetailsType,
@@ -21,6 +23,8 @@ export interface WithProductsProps{
     detailsUpdated: string;
     fetchProductList: Function;
     fetchProductDetails: Function;
+    searchTerm: string;
+    clearProductDetails: Function;
 }
 
 export const withProducts = connect(
@@ -30,9 +34,11 @@ export const withProducts = connect(
         productsDetails: getProductsDetails(state),
         productsDetailsLoadState: getProductLoadState(state),
         detailsUpdated: getProductUpdated(state),
+        searchTerm: getSearchTerm(state),
     }),
     (dispatch) => bindActionCreators({
         fetchProductList: fetchSearch,
         fetchProductDetails: fetchProduct,
+        clearProductDetails,
     }, dispatch),
 );

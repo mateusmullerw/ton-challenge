@@ -28,7 +28,6 @@ const HeaderNavigator = ({
                 headerTitle: 'Ton Challenge',
                 headerStyle: {
                     backgroundColor: Colors[colorScheme].header,
-                    paddingRight: 15,
                 },
             }}
         >

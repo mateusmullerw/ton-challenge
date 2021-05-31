@@ -18,7 +18,9 @@ export interface ColorsInterface{
     delete: string;
     notification: string;
     header: string;
+    searchBar: string;
 }
+export type ColorSchemeType = 'light' | 'dark'
 
 export default {
     light: {
@@ -35,6 +37,7 @@ export default {
         notification: '#FE3A3C',
         header: '#fff',
         card: '#fff',
+        searchBar: '#E2E2F0',
 
     },
     dark: {
@@ -51,6 +54,7 @@ export default {
         notification: '#D14043',
         header: '#252836',
         card: '#252836',
+        searchBar: '#3B3E52',
 
     },
 };

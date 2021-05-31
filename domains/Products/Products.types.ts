@@ -7,8 +7,11 @@ export interface State {
 export interface ProductDetailsState extends WithDataFetchParams<ProductsDetailsType> {
     lastUpdate: string,
 }
+export interface ProductListState extends WithDataFetchParams<ProductListInterface> {
+    searchTerm: string,
+}
 export interface DataInterface {
-    productList: WithDataFetchParams<ProductListInterface>;
+    productList: ProductListState;
     productsDetails: ProductDetailsState;
 }
 
@@ -27,12 +30,12 @@ export interface ProductDetailsInterface {
         data: Partial<ProductData>
         key: string
         isAddedToCart: boolean,
-        colorScheme: 'light' | 'dark',
     }
 
 export interface ProductItemInterface extends ProductDetailsInterface {
         addToCart: Function;
         removeFromCart: Function;
+        colorScheme: 'light' | 'dark',
     }
 
 export interface ProductData {

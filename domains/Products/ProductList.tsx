@@ -5,12 +5,12 @@ import { ProductItem } from '../../components/ProductItem';
 import { withProducts, WithProductsProps } from './Products.hocs';
 import { withCart, WithCartProps } from '../Cart/Cart.hocs';
 import { View } from '../../components/Themed';
-import { Loading } from '../../components/Loading';
 import { EndOfListLoading } from '../../components/EndOfListLoading';
 import { styles } from './ProducList.styles';
 import { LOAD_STATE } from '../../redux/constants';
 import { ProductItemInterface, ProductDetailsInterface } from './Products.types';
 import useColorScheme from '../../hooks/useColorScheme';
+import { SearchBar } from '../../components/SearchBar';
 
 interface ProductListProps extends WithProductsProps, WithCartProps{}
 
@@ -25,10 +25,10 @@ const ProductList = ({
     addToCart,
     removeFromCart,
     detailsUpdated,
+    searchTerm,
 }:ProductListProps) => {
     const colorScheme = useColorScheme();
     const [currentPage, setCurrentPage] = useState<number>(0);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [pageItems, setPageItems] = useState<ProductItemInterface[]>([]);
 
     const loadPage = (page: number, itemsPerPage: number) => {
@@ -39,6 +39,11 @@ const ProductList = ({
             .slice(pageStart, pageEnd);
         pageItemsList.forEach((item) => fetchProductDetails(item));
     };
+    const onsubmitSeacrh = (text: string) => {
+        fetchProductList(text);
+        setPageItems([]);
+        setCurrentPage(0);
+    };
 
     const loadNextPage = () => {
         const nextPage = currentPage + 1;
@@ -48,52 +53,59 @@ const ProductList = ({
 
     useEffect(() => {
         if (!productList.objectIDs) {
-            fetchProductList();
+            fetchProductList(searchTerm);
         }
     }, []);
 
     useEffect(() => {
         if (productListLoadState === LOAD_STATE.SUCCESS) {
             loadNextPage();
-            setIsLoading(false);
         }
     }, [productListLoadState]);
 
     useEffect(() => {
-        const loadedDetails: ProductDetailsInterface[] = [];
-        productsDetails.forEach((product) => {
-            loadedDetails.push(product);
-        });
+        if (productsDetails.size > 0) {
+            const loadedDetails: ProductDetailsInterface[] = [];
+            productsDetails.forEach((product) => {
+                loadedDetails.push(product);
+            });
 
-        setPageItems(loadedDetails.map((item) => (
-            {
-                data: item.data,
-                addToCart,
-                removeFromCart,
-                key: item.key,
-                isAddedToCart: item.isAddedToCart,
-                colorScheme,
-            }
-        )));
+            setPageItems(loadedDetails.map((item) => (
+                {
+                    data: item.data,
+                    addToCart,
+                    removeFromCart,
+                    key: item.key,
+                    isAddedToCart: item.isAddedToCart,
+                    colorScheme,
+                }
+            )));
+        }
     }, [productsDetails, detailsUpdated]);
 
     return (
         <View style={styles.container}>
-            {isLoading
-                ? <Loading />
-                : (
-                    <FlatList
-                        style={styles.list}
-                        data={[...pageItems]}
-                        renderItem={ProductItem}
-                        keyExtractor={(item) => item.key}
-                        numColumns={2}
-                        initialNumToRender={ITEMS_PER_PAGE}
-                        onEndReached={loadNextPage}
-                        onEndReachedThreshold={0.1}
-                        ListFooterComponent={EndOfListLoading}
-                    />
+            <FlatList
+                style={styles.list}
+                data={[...pageItems]}
+                renderItem={ProductItem}
+                keyExtractor={(item) => item.key}
+                numColumns={2}
+                initialNumToRender={ITEMS_PER_PAGE}
+                onEndReached={loadNextPage}
+                onEndReachedThreshold={0.1}
+                ListFooterComponent={EndOfListLoading}
+                ListHeaderComponent={() => SearchBar(
+                    {
+                        onSubmit: onsubmitSeacrh,
+                        colorScheme,
+                        initialValue: searchTerm,
+                    },
                 )}
+                ListHeaderComponentStyle={styles.listHeader}
+                columnWrapperStyle={styles.listColumn}
+            />
+
         </View>
     );
 };

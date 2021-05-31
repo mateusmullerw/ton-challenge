@@ -7,7 +7,8 @@ export const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         padding: 10,
-        margin: 10,
+        marginVertical: 5,
+        marginLeft: 10,
         overflow: 'hidden',
     },
     image: {

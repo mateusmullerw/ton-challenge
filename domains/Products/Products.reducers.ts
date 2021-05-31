@@ -11,11 +11,13 @@ export const FETCH_PRODUCT_REQUEST_FAILED = 'FETCH_PRODUCT_REQUEST_FAILED';
 export const FETCH_SEARCH_REQUEST_CALLED = 'FETCH_SEARCH_REQUEST_CALLED';
 export const FETCH_SEARCH_REQUEST_SUCCEEDED = 'FETCH_SEARCH_REQUEST_SUCCEEDED';
 export const FETCH_SEARCH_REQUEST_FAILED = 'FETCH_SEARCH_REQUEST_FAILED';
+export const CLEAR_PRODUCT_DETAILS = 'CLEAR_PRODUCT_DETAILS';
 
 const productListInitialState = {
     loadState: LOAD_STATE.LOADING,
     data: {},
     error: null,
+    searchTerm: '',
 };
 const productDetailsInitialState = {
     loadState: LOAD_STATE.LOADING,
@@ -27,7 +29,7 @@ const productDetailsInitialState = {
 const productListsReducer = (state = productListInitialState, action: ActionType) => {
     switch (action.type) {
     case FETCH_SEARCH_REQUEST_CALLED:
-        return { ...state, loadState: LOAD_STATE.LOADING };
+        return { ...state, loadState: LOAD_STATE.LOADING, searchTerm: action.payload };
     case FETCH_SEARCH_REQUEST_SUCCEEDED:
         return { ...state, loadState: LOAD_STATE.SUCCESS, data: action.payload };
     case FETCH_SEARCH_REQUEST_FAILED:
@@ -41,6 +43,7 @@ interface ProductDetailsAction extends ActionType{
     payload: ProductsDetailsItemType
 }
 
+// eslint-disable-next-line complexity
 const productDetailsReducer = (
     state = productDetailsInitialState, action: ProductDetailsAction,
 ) => {
@@ -66,6 +69,8 @@ const productDetailsReducer = (
         };
     case FETCH_PRODUCT_REQUEST_FAILED:
         return { ...state, loadState: LOAD_STATE.FAIL, error: action.payload };
+    case CLEAR_PRODUCT_DETAILS:
+        return { ...state, oadState: LOAD_STATE.LOADING, data: new Map() };
     default:
         return state;
     }

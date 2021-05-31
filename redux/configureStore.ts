@@ -12,8 +12,6 @@ export const configureStore = (initialState = {}) => {
         initialState,
         applyMiddleware(...middlewares),
     );
-    // TODO
-    // persist your state
 
     return store;
 };
