@@ -2,6 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import '@testing-library/jest-dom';
 import { ProductItem, texts } from './ProductItem';
+import { ColorSchemeType } from '../constants/Colors';
 
 const addToCart = jest.fn();
 const removeFromCart = jest.fn();
@@ -12,6 +13,7 @@ const item = {
         title: 'title',
     },
     key: 'key',
+    colorScheme: 'dark' as ColorSchemeType,
     isAddedToCart: false,
     addToCart,
     removeFromCart,

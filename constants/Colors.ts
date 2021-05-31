@@ -18,6 +18,7 @@ export interface ColorsInterface{
     delete: string;
     notification: string;
     header: string;
+    card: string;
     searchBar: string;
 }
 export type ColorSchemeType = 'light' | 'dark'
